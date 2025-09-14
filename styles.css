@@ -213,11 +213,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* --- 5. Styles for projects.html & Other Simple Pages --- */
-.simple-page-container {
-    text-align: center; padding: 5rem 2rem;
-}
-/* --- 6. Styles for New Action Buttons on start.html --- */
+/* --- 5. Styles for New Action Buttons on start.html --- */
 .tool-header {
     display: flex;
     justify-content: center;
@@ -240,7 +236,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
 .action-button:hover {
@@ -249,8 +245,7 @@ body {
     border-color: var(--accent-blue);
 }
 
-
-/* --- 7. Styles for Fullscreen Overlay --- */
+/* --- 6. Styles for Fullscreen Overlay --- */
 .fullscreen-overlay {
     position: fixed;
     top: 0;
@@ -267,68 +262,7 @@ body {
     backdrop-filter: blur(5px);
 }
 
-
-/* --- 8. Styles for projects.html Grid --- */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.project-card {
-    background-color: var(--container-color);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent-blue);
-}
-
-.project-preview {
-    height: 200px;
-    background-color: #ffffff;
-    pointer-events: none; /* Makes the iframe non-interactive */
-}
-
-.project-preview iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    /* Optional: Scale down the content to make it look more like a thumbnail */
-    transform-origin: top left;
-    transform: scale(0.5); /* Adjust scale as needed */
-    width: 200%;
-    height: 200%;
-}
-
-.project-info {
-    padding: 1rem;
-}
-
-.project-info h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.1rem;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.project-info p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-/* --- 9. Styles for Share Modal --- */
+/* --- 7. Styles for Share Modal --- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -391,4 +325,66 @@ body {
     width: 100%;
     padding: 0.8rem 1rem;
     font-size: 1rem;
+}
+
+/* --- 8. Styles for projects.html Grid --- */
+.simple-page-container {
+    text-align: center;
+    padding: 5rem 2rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-card {
+    background-color: var(--container-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-blue);
+}
+
+.project-preview {
+    height: 200px;
+    background-color: #ffffff;
+    pointer-events: none; /* Makes the iframe non-interactive */
+}
+
+/* --- CORRECTED STYLE FOR PROJECT PREVIEW --- */
+.project-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.project-info {
+    padding: 1rem;
+}
+
+.project-info h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
 }
