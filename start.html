@@ -37,7 +37,6 @@
         <main class="tool-display">
             <div class="tool-header">
                 <h3>Generated Tool</h3>
-                <!-- NEW BUTTONS -->
                 <div class="tool-actions">
                     <button id="save-button" class="action-button">Save</button>
                     <button id="share-button" class="action-button">Share</button>
@@ -51,9 +50,21 @@
         </main>
     </div>
     
-    <!-- NEW: Hidden overlay for fullscreen message -->
     <div id="fullscreen-overlay" class="fullscreen-overlay">
         <p>Press ESC or double-tap to exit fullscreen</p>
+    </div>
+
+    <!-- NEW: Hidden modal for share options -->
+    <div id="share-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal-button" class="close-button">&times;</button>
+            <h2>Share Your Tool</h2>
+            <p>Choose how you'd like to share your generated tool.</p>
+            <div class="modal-actions">
+                <button id="email-share-button" class="action-button modal-button">Share via Email</button>
+                <button id="copy-share-button" class="action-button modal-button">Copy Link & Open Site</button>
+            </div>
+        </div>
     </div>
     
     <script src="start.js"></script>
