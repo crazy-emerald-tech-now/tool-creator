@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. CONFIGURATION AND ELEMENTS ---
     const API_KEY = 'AIzaSyCKVhR9o0D9F5zF60G6MYQnSk5LmWfB0VA';
-    const API_URL = `https://generativelen/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+    // --- THIS IS THE CORRECTED LINE ---
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
     
     // Page Elements
     const chatHistoryEl = document.getElementById('chat-history');
@@ -15,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const fullscreenOverlay = document.getElementById('fullscreen-overlay');
     const toolDisplayEl = document.querySelector('.tool-display');
     
-    // Share Modal Elements (UPDATED)
+    // Share Modal Elements
     const shareModal = document.getElementById('share-modal');
     const closeModalBtn = document.getElementById('close-modal-button');
     const emailShareBtn = document.getElementById('email-share-button');
-    const createShareLinkBtn = document.getElementById('create-share-link-button'); // Updated ID
+    const createShareLinkBtn = document.getElementById('create-share-link-button');
 
     let conversationHistory = [];
     let currentGeneratedCode = '';
@@ -44,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const projectIndex = projects.findIndex(p => p.id === currentProjectId);
             if (projectIndex !== -1) {
                 projects[projectIndex].code = currentGeneratedCode;
-                // Also update the prompt in case it was the start of an edited conversation
                 projects[projectIndex].prompt = conversationHistory[0]?.parts[0]?.text || projects[projectIndex].prompt;
                 alert('Project updated successfully!');
             } else {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
         closeShareModal();
     };
-    const handleCreateShareLink = () => { // Renamed function
+    const handleCreateShareLink = () => {
         const base64Code = btoa(currentGeneratedCode);
         const shareUrl = `https://base64-code.onrender.com/#${base64Code}`;
         navigator.clipboard.writeText(shareUrl).then(() => {
@@ -169,29 +169,27 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('fullscreenchange', () => { fullscreenOverlay.style.display = document.fullscreenElement ? 'flex' : 'none'; });
     toolDisplayEl.addEventListener('dblclick', () => { if (document.fullscreenElement) document.exitFullscreen(); });
     
-    // Updated Share Button Listeners
     shareBtn.addEventListener('click', openShareModal);
     closeModalBtn.addEventListener('click', closeShareModal);
     emailShareBtn.addEventListener('click', handleEmailShare);
-    createShareLinkBtn.addEventListener('click', handleCreateShareLink); // Updated listener
+    createShareLinkBtn.addEventListener('click', handleCreateShareLink);
     window.addEventListener('click', (event) => { if (event.target == shareModal) closeShareModal(); });
     
     saveBtn.addEventListener('click', saveTool);
     fullscreenBtn.addEventListener('click', toggleFullscreen);
     window.addEventListener('message', handleIframeError);
 
-    // --- PAGE LOAD LOGIC (BUG FIX) ---
+    // --- PAGE LOAD LOGIC ---
     const projectIdToLoad = localStorage.getItem('loadProjectId');
     if (projectIdToLoad) {
         localStorage.removeItem('loadProjectId');
         const project = (JSON.parse(localStorage.getItem('toolCreatorProjects')) || []).find(p => p.id == projectIdToLoad);
         if (project) {
-            // BUG FIX: Fully restore the application state for the loaded project
             currentProjectId = project.id;
-            conversationHistory = [{ role: "user", parts: [{ text: project.prompt }] }]; // Restore conversation history
+            conversationHistory = [{ role: "user", parts: [{ text: project.prompt }] }];
             addMessageToChat('ai', `Loading your project: "${project.prompt.substring(0, 50)}..."`);
-            renderTool(project.code); // This also sets currentGeneratedCode
-            showLoader(false); // Ensure loader is hidden
+            renderTool(project.code);
+            showLoader(false);
         }
     } else {
         const initialPrompt = localStorage.getItem('userPrompt');
