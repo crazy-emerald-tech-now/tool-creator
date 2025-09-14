@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Project saved successfully!');
     };
 
-    // --- NEW SHARE MODAL LOGIC ---
+    // --- UPDATED SHARE MODAL LOGIC ---
     const openShareModal = () => {
         if (!currentGeneratedCode) {
             alert('There is no tool to share yet!');
@@ -57,25 +57,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const handleEmailShare = () => {
         const base64Code = btoa(currentGeneratedCode);
-        const shareUrl = `https://example.com/#${base64Code}`;
+        // UPDATED URL
+        const shareUrl = `https://base64-code.onrender.com/#${base64Code}`;
         const subject = encodeURIComponent("Check out this tool I made with Tool Creator!");
-        const body = encodeURIComponent(`Here is a link to a tool I created:\n\n${shareUrl}\n\nPaste the link into a site like example.com to view the tool.`);
+        const body = encodeURIComponent(`Here is a link to a tool I created:\n\n${shareUrl}\n\nPaste the full link into the site to generate a permanent link.`);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
         closeShareModal();
     };
 
     const handleCopyShare = () => {
         const base64Code = btoa(currentGeneratedCode);
-        const shareUrl = `https://example.com/#${base64Code}`;
+        // UPDATED URL
+        const shareUrl = `https://base64-code.onrender.com/#${base64Code}`;
         navigator.clipboard.writeText(shareUrl).then(() => {
-            alert("Now we will open the site that translates the code that was copied into your clipboard into your tool");
-            window.open('https://example.com', '_blank');
+            alert("Share link copied to your clipboard! Now we will open the site where you can paste this link.");
+            // UPDATED URL
+            window.open('https://base64-code.onrender.com', '_blank');
         }, () => {
             alert('Failed to copy the share link to your clipboard.');
         });
         closeShareModal();
     };
-    // --- END NEW SHARE LOGIC ---
+    // --- END UPDATED SHARE LOGIC ---
 
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) { toolDisplayEl.requestFullscreen().catch(err => alert(`Error: ${err.message}`)); } 
@@ -152,12 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('fullscreenchange', () => { fullscreenOverlay.style.display = document.fullscreenElement ? 'flex' : 'none'; });
     toolDisplayEl.addEventListener('dblclick', () => { if (document.fullscreenElement) document.exitFullscreen(); });
     
-    // New Share Button Listeners
     shareBtn.addEventListener('click', openShareModal);
     closeModalBtn.addEventListener('click', closeShareModal);
     emailShareBtn.addEventListener('click', handleEmailShare);
     copyShareBtn.addEventListener('click', handleCopyShare);
-    window.addEventListener('click', (event) => { if (event.target == shareModal) closeShareModal(); }); // Close modal if clicking outside
+    window.addEventListener('click', (event) => { if (event.target == shareModal) closeShareModal(); });
     
     saveBtn.addEventListener('click', saveTool);
     fullscreenBtn.addEventListener('click', toggleFullscreen);
